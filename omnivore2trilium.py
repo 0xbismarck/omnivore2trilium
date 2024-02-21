@@ -21,22 +21,13 @@ def auth_trilium(key):
 def print_profile(omnivoreql_client):
     print(omnivoreql_client.get_profile())
 
-def fetch_articles(omnivoreql_client):
+def fetch_articles(omnivoreql_client, queryString, articleLimit):
     #articles = omnivoreql_client.get_articles()
     #print(articles["search"])
     article_notes = []
     profile = omnivoreql_client.get_profile()
 
-    #todo: create a query string builder
-    today = DT.date.today()
-    week_ago = today - DT.timedelta(days=7)
-    year = week_ago.year
-    month = week_ago.month
-    day = week_ago.day
-    print ("day of the day " + str(day))
-    dateStr = str(year)+"-"+str(month)+"-"+str(day)
-    qstr = "in:all AND updated:"+dateStr+".. AND has:highlights"
-    articles = omnivoreql_client.get_articles(limit=5, include_content=True, query=qstr)
+    articles = omnivoreql_client.get_articles(limit=articleLimit, include_content=True, query=queryString)
 
     username = profile['me']['profile']['username']
     # slug = articles['search']['edges'][0]['node']['slug']
@@ -155,11 +146,33 @@ def loadKeys(fileName):
                 # print ("o key - "+ omnivore_key)
     return omnivore_key, trilium_key
 
+# builds the query string for the Omnivore Query engine. 
+def queryStringBuilder(args):
+    #base query string
+    queryStr = "has:highlights" # "in:all AND updated:"+dateStr+".. AND has:highlights"
+    #in:inbox  in:all  in:archive
+    queryStr+= f" AND in:{args.archive}"
+    #add date string
+    if args.days:
+        print ("Args.days == "+ str(args.days))
+        today = DT.date.today()
+        past_date = today - DT.timedelta(days=args.days)
+        queryStr+= f" AND updated:{past_date.year}-{past_date.month}-{past_date.day}.."
+    
+    print ("queryStr = "+ queryStr)
+    return queryStr
 
 if __name__ == "__main__":
+    list_of_choices = ["inbox", "archive", "all"]
     parser = argparse.ArgumentParser(description = 'Omnivore2Trilium: Send your Omnivore Highlights to Trilium Notes')
     parser.add_argument('-k', '--keys', type=str, 
                         help='File containing tokens to authenticate to Omnivore and Trilium.')
+    parser.add_argument('-a', '--archive', type=str, choices=list_of_choices, default="all",
+                        help="Extract highlights from the inbox, archive, or all. (default is all)")
+    parser.add_argument('-d', "--days", type=int, default=0,
+                        help="Number of days ago the the articles were highlighted.")
+    parser.add_argument('-l', "--limit", type=int, default=10,
+                        help="Limit number of articles returned by Omnivore")
     args = parser.parse_args()
 
     okey, tkey = loadKeys(args.keys)
@@ -167,7 +180,8 @@ if __name__ == "__main__":
         sys.exit("Error: both keys are required.")
     oclient = auth_omnivore(okey)
     tclient = auth_trilium(tkey)
+    queryString = queryStringBuilder(args)
     #print (tclient)
     #print_profile(oclient)
-    myNotes = fetch_articles(oclient)
+    myNotes = fetch_articles(oclient, queryString, args.limit)
     createNote(tclient, myNotes)
