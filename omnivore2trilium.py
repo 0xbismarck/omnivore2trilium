@@ -86,13 +86,13 @@ def get_labels(label_list):
     
     return labels
 
-def createNote(tclient, myNotes):
+def createNote(tclient, myNotes, pNoteId ):
     # print(tclient.app_info())
     for note in myNotes:
         # print ("SLUG - "+note["slug"])
         slugHash = hashlib.sha256(note["slug"].encode()).hexdigest()
         # print ("SLUG hash - "+slugHash)
-        res = tclient.create_note( parentNoteId = "ED7I5lTmim3o",
+        res = tclient.create_note( parentNoteId =  pNoteId,
         title = note["title"],
         type="text",
         content = formatNoteContent(note),
@@ -169,6 +169,8 @@ if __name__ == "__main__":
                         help='File containing tokens to authenticate to Omnivore and Trilium.')
     parser.add_argument('-a', '--archive', type=str, choices=list_of_choices, default="all",
                         help="Extract highlights from the inbox, archive, or all. (default is all)")
+    parser.add_argument('-p', '--parentNoteId', type=str, default="root",
+                        help="Note ID of the parent Trilium Note. (defaults to root)")
     parser.add_argument('-d', "--days", type=int, default=0,
                         help="Number of days ago the the articles were highlighted.")
     parser.add_argument('-l', "--limit", type=int, default=10,
@@ -184,4 +186,4 @@ if __name__ == "__main__":
     #print (tclient)
     #print_profile(oclient)
     myNotes = fetch_articles(oclient, queryString, args.limit)
-    createNote(tclient, myNotes)
+    createNote(tclient, myNotes, args.parentNoteId)
