@@ -72,3 +72,6 @@ This is the value needed for the parentNoteId.
 Special thanks to
 - [OmnivoreQL](https://github.com/yazdipour/OmnivoreQL)
 - [Trilium-py](https://github.com/Nriver/trilium-py)
+These projects made Omnivore2trilium possibile.
+
+Additionally thanks to [Omnivore](https://omnivore.app/) and [Trilium Notes](https://github.com/zadam/trilium) for making two great FOSS projects.
