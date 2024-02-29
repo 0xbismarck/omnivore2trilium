@@ -15,20 +15,22 @@ pip install trilium_py
 Authenticating to both Omnivore and Trilium Notes requires an API token for each service. 
 
 Instructions to generate tokens are at the following links
-* https://docs.omnivore.app/integrations/api.html#getting-an-api-token - Omnivore
-* Trilium Notes:
-** Click on the "Main menu"
-** Click "Options"
-** Click "ETAPI"
-** Click "Create New ETAPI Token"
+- https://docs.omnivore.app/integrations/api.html#getting-an-api-token - Omnivore
+- Trilium Notes:
+  - Click on the "Main menu"
+  - Click "Options"
+  - Click "ETAPI"
+  - Click "Create New ETAPI Token"
 
 Put the token's in the "file" matching each token to the line that starts with the service. Each line of the file must start with either "omnivore:" or "trilium:" so that the software knows which token belong to a particular service.  Lines that do not start with the required prefix will be ignored by the software.
 
 ## Usage
 Make sure that the Python virtual environment is activated:
+
 `source venv/bin/activate`
 
 Basic execution:
+
 `python3 omnivore2trilium.py -k key`
 
 This uses the keys (within the key file ) to retrieve highlights from 10 notes and store them in the root note.
