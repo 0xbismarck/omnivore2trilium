@@ -27,15 +27,15 @@ Put the token's in the "file" matching each token to the line that starts with t
 ## Usage
 Make sure that the Python virtual environment is activated:
 
-`source venv/bin/activate`
+```source venv/bin/activate```
 
 Basic execution:
 
-`python3 omnivore2trilium.py -k key`
+```python3 omnivore2trilium.py -k key```
 
 This uses the keys (within the key file ) to retrieve highlights from 10 notes and store them in the root note.
 
-`python3 omnivore2trilium.py -k ../keys.txt -d 30 -a all -l 100 -p BE5Id3adb33f`
+```python3 omnivore2trilium.py -k ../keys.txt -d 30 -a all -l 100 -p BE5Id3adb33f```
 
 This will retrieve Omnivore highlights made in the last 30 days and places within Trilium under the Note with Id "BE5Id3adb33f". 
 
@@ -70,6 +70,7 @@ This is the value needed for the parentNoteId.
 Special thanks to
 - [OmnivoreQL](https://github.com/yazdipour/OmnivoreQL)
 - [Trilium-py](https://github.com/Nriver/trilium-py)
+
 These projects made Omnivore2trilium possibile.
 
 Additionally thanks to [Omnivore](https://omnivore.app/) and [Trilium Notes](https://github.com/zadam/trilium) for making two great FOSS projects.
