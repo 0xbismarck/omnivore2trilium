@@ -42,21 +42,19 @@ This will retrieve Omnivore highlights made in the last 30 days and places withi
 ### Available options
 
 ```
-usage: omnivore2trilium.py [-h] [-k KEYS] [-a {inbox,archive,all}]
-                           [-p PARENTNOTEID] [-d DAYS] [-l LIMIT]
+usage: omnivore2trilium.py [-h] [-k KEYS] [-a {inbox,archive,all}] [-p PARENTNOTEID] [-d DAYS] [-o] [-l LIMIT]
 
 Omnivore2Trilium: Send your Omnivore Highlights to Trilium Notes
 
 options:
   -h, --help            show this help message and exit
-  -k KEYS, --keys KEYS  File containing tokens to authenticate to Omnivore and
-                        Trilium.
+  -k KEYS, --keys KEYS  File containing tokens to authenticate to Omnivore and Trilium.
   -a {inbox,archive,all}, --archive {inbox,archive,all}
-                        Extract highlights from the inbox, archive, or all.
-                        (default is all)
+                        Extract highlights from the inbox, archive, or all. (default is all)
   -p PARENTNOTEID, --parentNoteId PARENTNOTEID
                         Note ID of the parent Trilium Note. (defaults to root)
   -d DAYS, --days DAYS  Number of days ago the the articles were highlighted.
+  -o, --overwrite       Overwrite content of existing note. (Erases any changes in Trilium)
   -l LIMIT, --limit LIMIT
                         Limit number of articles returned by Omnivore
 ```

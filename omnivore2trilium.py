@@ -78,17 +78,19 @@ def getLabels(label_list):
         labels.append(label["name"])
     return labels
 
-def createNote(tclient, myNotes, pNoteId ):
+def createNote(tclient, myNotes, args):
     for note in myNotes:
         slugHash = hashlib.sha256(note["slug"].encode()).hexdigest()
-        res = tclient.create_note( parentNoteId =  pNoteId,
-        title = note["title"],
-        type="text",
-        content = formatNoteContent(note),
-        noteId =  slugHash
-        )
-        # print (res)
-        addLabels(tclient, note, slugHash)
+        note_meta = tclient.get_note(slugHash)
+        if (note_meta.get("code") or args.overwrite): # code is 'none' if the note exists
+            res = tclient.create_note( parentNoteId =  args.parentNoteId,
+            title = note["title"],
+            type="text",
+            content = formatNoteContent(note),
+            noteId =  slugHash
+            )
+            # print (res)
+            addLabels(tclient, note, slugHash)
 
 # Format the content before adding it Trilium.
 def formatNoteContent(note):
@@ -159,6 +161,8 @@ if __name__ == "__main__":
                         help="Note ID of the parent Trilium Note. (defaults to root)")
     parser.add_argument('-d', "--days", type=int, default=0,
                         help="Number of days ago the the articles were highlighted.")
+    parser.add_argument('-o', '--overwrite', action='store_true',
+                        help="Overwrite content of existing note. (Erases any changes in Trilium)")
     parser.add_argument('-l', "--limit", type=int, default=10,
                         help="Limit number of articles returned by Omnivore")
     args = parser.parse_args()
@@ -171,4 +175,4 @@ if __name__ == "__main__":
     queryString = queryStringBuilder(args)
 
     myNotes = fetchArticles(oclient, queryString, args.limit)
-    createNote(tclient, myNotes, args.parentNoteId)
+    createNote(tclient, myNotes, args)
