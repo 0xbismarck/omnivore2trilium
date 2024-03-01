@@ -56,7 +56,7 @@ options:
   -d DAYS, --days DAYS  Number of days ago the the articles were highlighted.
   -o, --overwrite       Overwrite content of existing note. (Erases any changes in Trilium)
   -l LIMIT, --limit LIMIT
-                        Limit number of articles returned by Omnivore
+                        Limit number of articles returned by Omnivore (limit 100)
 ```
 
 ### Locating the NoteID

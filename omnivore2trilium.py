@@ -169,7 +169,7 @@ if __name__ == "__main__":
     parser.add_argument('-o', '--overwrite', action='store_true',
                         help="Overwrite content of existing note. (Erases any changes in Trilium)")
     parser.add_argument('-l', "--limit", type=int, default=10,
-                        help="Limit number of articles returned by Omnivore")
+                        help="Limit number of articles returned by Omnivore (limit 100)")
     args = parser.parse_args()
 
     okey, tkey = loadKeys(args.keys)
