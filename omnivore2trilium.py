@@ -79,7 +79,10 @@ def getLabels(label_list):
     return labels
 
 def createNote(tclient, myNotes, args):
+    articles_received = 0
+    articles_injested = 0
     for note in myNotes:
+        articles_received+=1
         slugHash = hashlib.sha256(note["slug"].encode()).hexdigest()
         note_meta = tclient.get_note(slugHash)
         if (note_meta.get("code") or args.overwrite): # code is 'none' if the note exists
@@ -91,6 +94,8 @@ def createNote(tclient, myNotes, args):
             )
             # print (res)
             addLabels(tclient, note, slugHash)
+            articles_injested+=1
+    return articles_received, articles_injested
 
 # Format the content before adding it Trilium.
 def formatNoteContent(note):
@@ -175,4 +180,6 @@ if __name__ == "__main__":
     queryString = queryStringBuilder(args)
 
     myNotes = fetchArticles(oclient, queryString, args.limit)
-    createNote(tclient, myNotes, args)
+    received, injested = createNote(tclient, myNotes, args)
+    print(f'Received {received} articles from Omnivore')
+    print(f'Transfered {injested} articles into Trilium')
