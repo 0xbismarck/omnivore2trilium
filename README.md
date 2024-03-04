@@ -2,11 +2,25 @@
 Export highlights from Omnivore directly into Trilium Notes
 
 ## Installation
+
 Download the omnivore2trilium git repo. 
+
+Python 3 is required on both Linux and Windows.
+
+### On Linux
 
  ``` 
 python3 -m venv venv
 source venv/bin/activate
+pip install omnivoreql
+pip install trilium_py
+ ``` 
+
+### On Windows
+
+ ``` 
+python -m venv venv
+venv\Scripts\activate.bat
 pip install omnivoreql
 pip install trilium_py
  ``` 
@@ -25,15 +39,26 @@ Instructions to generate tokens are at the following links
 Put the token's in the "file" matching each token to the line that starts with the service. Each line of the file must start with either "omnivore:" or "trilium:" so that the software knows which token belong to a particular service.  Lines that do not start with the required prefix will be ignored by the software.
 
 ## Usage
+Trilium needs to be open for it to receive highlights this tool.
+
 Make sure that the Python virtual environment is activated:
 
+From the Linux terminal:
+
 ```source venv/bin/activate```
+
+From the windows commandline (cmd.exe):
+
+```venv\Scripts\activate.bat```
+
+Note: On Windows type 'python' instead of python3.
 
 Basic execution:
 
 ```python3 omnivore2trilium.py -k key```
 
 This uses the keys (within the key file ) to retrieve highlights from 10 notes and store them in the root note.
+
 
 ```python3 omnivore2trilium.py -k ../keys.txt -d 30 -a all -l 100 -p BE5Id3adb33f```
 
