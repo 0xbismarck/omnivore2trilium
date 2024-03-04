@@ -3,9 +3,9 @@ Export highlights from Omnivore directly into Trilium Notes
 
 ## Installation
 
-Download the omnivore2trilium git repo. 
-
 Python 3 is required on both Linux and Windows.
+
+Download the omnivore2trilium git repo. 
 
 ### On Linux
 
@@ -47,7 +47,7 @@ From the Linux terminal:
 
 ```source venv/bin/activate```
 
-From the windows commandline (cmd.exe):
+From the Windows commandline (cmd.exe):
 
 ```venv\Scripts\activate.bat```
 
