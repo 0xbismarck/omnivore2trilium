@@ -47,6 +47,8 @@ def buildNoteDictionary(article):
     note["title"] = article['article']['article']['title']
     note["url"] = article['article']['article']['url']
     note["author"] = article['article']['article']['author']
+    note["published"] = article['article']['article']['publishedAt']
+    note["saved"] = article['article']['article']['savedAt']
     note["slug"] = article['article']['article']['slug']
     highlights = extractHighlights(article['article']['article']['highlights'])
     note["highlights"] = highlights
@@ -101,7 +103,10 @@ def createNote(tclient, myNotes, args):
 def formatNoteContent(note):
     content = ''
     if note["author"]:
-        content+="author: "+ note["author"]+'<br><br><br>'
+        content+="Author: "+ note["author"]+'<br>'
+    if note["published"]:
+        content+="Published: "+ note["published"]+'<br>'
+    content+="Saved on: "+ note["saved"]+'<br><br><br>'
     for highlight in note["highlights"]:
         content+=highlight+'<br><br>'
     content+='<br>'+note["url"]
